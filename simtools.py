@@ -9,6 +9,7 @@ def ntrials(n, game, player):
     scores = np.zeros(n)
     for i in range(n):
         scores[i] = game(player=player, prints=False)
+        # print("GAME OVER \n")
     stats = {}
     stats["mean"] = np.mean(scores)
     stats["std"] = round(np.std(scores), 2)
@@ -17,4 +18,4 @@ def ntrials(n, game, player):
 #std seems to be roughly equivalent between mostTiles & leastTiles, though the mean for leastTiles seems to be about 50% of that of mostTiles
 
 
-print(ntrials(10000, game.game, strats.mostTiles))
+# print(ntrials(10, game.game, strats.human))

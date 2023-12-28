@@ -28,8 +28,8 @@ def makechoice(rolls, options, curtiles, strategy):
     return choice
 
 
-def game(player, tiles=list(range(1,10)), numdice=2 ,numface=6, prints=True):   #maybe optimise somehow with set
-    curtiles = tiles[:]
+def game(player, tiles=6, numdice=1 ,numface=6, prints=True):   #maybe optimise somehow with set
+    curtiles = list(range(1, tiles))
     while True:
         rolls = diceroll(numdice, numface)
         options = xsum(curtiles, sum(rolls)) # maybe don't even need xsum for human players, just for robodogs
@@ -51,7 +51,5 @@ def game(player, tiles=list(range(1,10)), numdice=2 ,numface=6, prints=True):   
         for tile in choice:
             curtiles.remove(tile)
 
-
-
-game(strats.fewestTiles, prints=False)
+# game(strats.fewestTiles)
 # print(xsum([1,2,3,4,5,6,7,8,9], 14))
