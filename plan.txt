@@ -1,0 +1,24 @@
+things to do:
+
+    simulate dice rolls
+        function - pick number of dice 
+    make the game function thing
+        playable by human
+            pick what number to go up to
+    then interface with robot ai players to test strategies
+
+have a read of the other thing you did
+
+do i need to have different players involved? may as well
+
+
+FUNCTIONS:
+    render(board_state)
+    make_move(board_state, move) 
+
+
+
+eventually - plot the avg scores of different strategies against some stuff 
+
+v first steps - 
+    make dice roll func(numdice=2, numfaces=6)
