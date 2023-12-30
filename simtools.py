@@ -1,7 +1,24 @@
+from collections import defaultdict
+from itertools import product
 import math
 import numpy as np
 import game
 import strats
+
+def dice_roll_probs(num_dice, num_faces):
+    """returns dict of roll totals and corresponding probabilities"""
+    counts = defaultdict(float)
+    total = pow(num_faces, num_dice)
+
+    for dice_values in product(range(1, num_faces + 1), repeat=num_dice):
+        sorted_values = sum(dice_values)
+        counts[sorted_values] += round(1 / total, 3) # rounding means probs add up to 1.008 but such is life
+    result = dict(counts)
+    return result
+
+rollprobs_2d_6f = (dice_roll_probs(2,6))
+
+def get_legal_rolls
 
 def ntrials(n, game, player):
     """takes a game that returns an int.
@@ -15,7 +32,8 @@ def ntrials(n, game, player):
     stats["std"] = round(np.std(scores), 2)
     return player.__name__, stats
 
-#std seems to be roughly equivalent between mostTiles & leastTiles, though the mean for leastTiles seems to be about 50% of that of mostTiles
 
-
-# print(ntrials(10, game.game, strats.human))
+def avgscore(boardstate, rollprobs):
+    """calculates the average score acheieved
+    from a given gamestate"""
+    legal_rolls = get_legal_rolls(boardstate)

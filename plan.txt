@@ -11,3 +11,13 @@ remaining: 2,3     5
     R can make: 5
 
 
+NEW PLAN:
+want to figure out best choice at each point 
+do this by calculating expected value at each point in the game
+do this in simtools i think
+
+
+stages:
+BOARDSTATE - which tiles are still up?
+LEGAL ROLLS - which rolls would allow you to take a turn?   is this necessary??? 
+
