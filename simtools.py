@@ -23,7 +23,7 @@ def ntrials(n, game, player):
     Runs n trials and returns player + summary stats in a dict."""
     scores = np.zeros(n)
     for i in range(n):
-        scores[i] = game(player=player, prints=False)
+        scores[i] = game(tiles=range(2,10), player=player, prints=False)
         # print("GAME OVER \n")
     stats = {}
     stats["mean"] = np.mean(scores)
@@ -48,9 +48,13 @@ def gen_gamestates(tiles):
 
 
 
-
-
-print(len(gen_gamestates(range(1,10))))
-rollprobs_2d_6f = (dice_roll_probs(2,6))
+if __name__ == "__main__":
+    # print(gen_gamestates(range(1,10)))
+    # rollprobs_2d_6f = (dice_roll_probs(2,6))
+    # print("\n\n")
+    # print(rollprobs_2d_6f)
+    # print(ntrials(10000, game.game, strats.mostTiles))
+    print(ntrials(10000, game.game, strats.fewestTiles))
+    # print(ntrials(10000, game.game, strats.fewestTiles))
 
 

@@ -41,18 +41,17 @@ def bestavgscore(board, rollprobs, cache):
         return cache[board] - (score for that board)
     else:
         avg_score_for_board = 0
-        for roll in rollprobs.keys():                      for each roll, add board * prob to score if no legal moves
-                                                            else, find score of best legal move & add that * prob to score 
-            legal = getlegalmoves(board, roll)              after this is done for all rolls, boards avg score is calculated.
+        for roll, prob in rollprobs.items():                      for each roll, add board * prob to score if no legal moves,
+                                                            else find score of best legal move & add that * prob to score 
+            legal = getlegalmoves(board, roll)              after this is done for all rolls, board's avg score is calculated.
             if len(legal)==0:
-                score += sum(board) * rollprobs[roll]
+                score += sum(board) * prob
             else:
                 poss_avg_scores_for_this_roll = []
-
+                                                            get gamestates resulting from legal moves above then 
                 for gamestate in gamestates:
                     poss_scores_for_this_roll.append(bestavgscore(gamestate, rollprobs, cache))
-                score += min()
-
+                score += min(poss_avg_scores_for_this_roll) * prob
 
     return avg_score_for_board
 

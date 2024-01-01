@@ -6,7 +6,7 @@ def diceroll(numdice=2, numface=6):
     dice rolls ranging from 1 to numface"""
     return [random.randint(1,numface) for _ in range(numdice)]
 
-def xsum(nums, total):
+def get_legal_moves(nums, roll):
     """returns a list of all combinations 
     from nums that sum to total"""
     def backtrack(start, target, path, result):
@@ -18,7 +18,7 @@ def xsum(nums, total):
         for i in range(start, len(nums)):
             backtrack(i+1, target - nums[i], path + [nums[i]], result)
     result = []
-    backtrack(0, total, [], result)
+    backtrack(0, roll, [], result)
     return result
 
 def makechoice(rolls, options, curtiles, strategy):
@@ -28,11 +28,11 @@ def makechoice(rolls, options, curtiles, strategy):
     return choice
 
 
-def game(player, tiles=6, numdice=1 ,numface=6, prints=True):   #maybe optimise somehow with set
-    curtiles = list(range(1, tiles))
+def game(player, tiles=range(1, 10), numdice=2 ,numface=6, prints=True):   #maybe optimise somehow with set
+    curtiles = list(tiles)
     while True:
         rolls = diceroll(numdice, numface)
-        options = xsum(curtiles, sum(rolls)) # maybe don't even need xsum for human players, just for robodogs
+        options = get_legal_moves(curtiles, sum(rolls)) # maybe don't even need xsum for human players, just for robodogs
 
         if prints:
             print(f"rolled: {rolls}, total: {sum(rolls)}") #replace with render function
@@ -51,5 +51,7 @@ def game(player, tiles=6, numdice=1 ,numface=6, prints=True):   #maybe optimise 
         for tile in choice:
             curtiles.remove(tile)
 
-# game(strats.fewestTiles)
-# print(xsum([1,2,3,4,5,6,7,8,9], 14))
+
+if __name__ == "__main__":
+    game(strats.fewestTiles)
+    print(get_legal_moves([1,2,3,4,5,6,7,8,9], 5))
