@@ -1,5 +1,5 @@
 from collections import defaultdict
-from itertools import product
+from itertools import product, combinations
 import math
 import numpy as np
 import game
@@ -16,9 +16,7 @@ def dice_roll_probs(num_dice, num_faces):
     result = dict(counts)
     return result
 
-rollprobs_2d_6f = (dice_roll_probs(2,6))
-
-def get_legal_rolls
+# def get_legal_rolls
 
 def ntrials(n, game, player):
     """takes a game that returns an int.
@@ -34,6 +32,25 @@ def ntrials(n, game, player):
 
 
 def avgscore(boardstate, rollprobs):
-    """calculates the average score acheieved
+    """return the average score acheieved
     from a given gamestate"""
-    legal_rolls = get_legal_rolls(boardstate)
+    avg_score = 0 
+    
+def gen_gamestates(tiles):
+    """generates a list of all possible gamestates 
+    not incl 0. is a list of tuples"""
+    gamestates = []
+    for r in tiles:
+    # Generate combinations of length r (board is an iterator)
+        board = combinations(tiles, r)
+        gamestates.extend(board)
+    return gamestates
+
+
+
+
+
+print(len(gen_gamestates(range(1,10))))
+rollprobs_2d_6f = (dice_roll_probs(2,6))
+
+

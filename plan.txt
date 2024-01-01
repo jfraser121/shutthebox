@@ -19,5 +19,40 @@ do this in simtools i think
 
 stages:
 BOARDSTATE - which tiles are still up?
-LEGAL ROLLS - which rolls would allow you to take a turn?   is this necessary??? 
+AVG SCORE FOR BOARDSTATE - needs:
+    SCORE FOR EACH ROLL(in prog) * PROBABILITY OF THAT ROLL(done - will just need to access in the function)
+
+    LEGAL ROLLS - which rolls would allow you to take a turn?   is this necessary???
+    
+
+PSEUDOCODE ATTEMPT:
+
+def optimalplay(all poss boardstates, rollprobs):
+    init cache of boardstate avgscores {}
+    add empty board = 0
+    for board in boardstates:
+        score = bestavgscore(board) - calc avg score with best play
+        cache[board] = score
+
+    return cache
+
+def bestavgscore(board, rollprobs, cache):
+    if board in cache:
+        return cache[board] - (score for that board)
+    else:
+        avg_score_for_board = 0
+        for roll in rollprobs.keys():                      for each roll, add board * prob to score if no legal moves
+                                                            else, find score of best legal move & add that * prob to score 
+            legal = getlegalmoves(board, roll)              after this is done for all rolls, boards avg score is calculated.
+            if len(legal)==0:
+                score += sum(board) * rollprobs[roll]
+            else:
+                poss_avg_scores_for_this_roll = []
+
+                for gamestate in gamestates:
+                    poss_scores_for_this_roll.append(bestavgscore(gamestate, rollprobs, cache))
+                score += min()
+
+
+    return avg_score_for_board
 
