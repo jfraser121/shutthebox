@@ -12,7 +12,8 @@ def dice_roll_probs(num_dice, num_faces):
 
     for dice_values in product(range(1, num_faces + 1), repeat=num_dice):
         sorted_values = sum(dice_values)
-        counts[sorted_values] += round(1 / total, 3) # rounding means probs add up to 1.008 but such is life
+        # counts[sorted_values] += round(1 / total, 10) # rounding means probs add up to 1.008 but such is life
+        counts[sorted_values] += 1 / total # rounding means probs add up to 1.008 but such is life
     result = dict(counts)
     return result
 
@@ -23,12 +24,13 @@ def ntrials(n, game, player):
     Runs n trials and returns player + summary stats in a dict."""
     scores = np.zeros(n)
     for i in range(n):
-        scores[i] = game(tiles=range(2,10), player=player, prints=False)
+        scores[i] = game(tiles=range(1,10), player=player, prints=False)
         # print("GAME OVER \n")
     stats = {}
-    stats["mean"] = np.mean(scores)
-    stats["std"] = round(np.std(scores), 2)
-    return player.__name__, stats
+    # stats["mean"] = np.mean(scores)
+    # stats["std"] = round(np.std(scores), 2)
+    return sum([1 for i in scores if i==0])
+    # return player.__name__, stats
 
 
 def avgscore(boardstate, rollprobs):
@@ -54,7 +56,7 @@ if __name__ == "__main__":
     # print("\n\n")
     # print(rollprobs_2d_6f)
     # print(ntrials(10000, game.game, strats.mostTiles))
-    print(ntrials(10000, game.game, strats.fewestTiles))
+    print((ntrials(100000, game.game, strats.fewestTiles)/1000))
     # print(ntrials(10000, game.game, strats.fewestTiles))
 
 

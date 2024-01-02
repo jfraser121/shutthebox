@@ -1,25 +1,14 @@
 import random
-import strats
+# import strats
+import main
+import sys
+print(sys.path)
 
 def diceroll(numdice=2, numface=6):
     """returns a numdice long list of 
     dice rolls ranging from 1 to numface"""
     return [random.randint(1,numface) for _ in range(numdice)]
 
-def get_legal_moves(nums, roll):
-    """returns a list of all combinations 
-    from nums that sum to total"""
-    def backtrack(start, target, path, result):
-        if target < 0:
-            return
-        if target == 0 :
-            result.append(path)
-            return
-        for i in range(start, len(nums)):
-            backtrack(i+1, target - nums[i], path + [nums[i]], result)
-    result = []
-    backtrack(0, roll, [], result)
-    return result
 
 def makechoice(rolls, options, curtiles, strategy):
     """takes a set of tile choices with
@@ -32,7 +21,7 @@ def game(player, tiles=range(1, 10), numdice=2 ,numface=6, prints=True):   #mayb
     curtiles = list(tiles)
     while True:
         rolls = diceroll(numdice, numface)
-        options = get_legal_moves(curtiles, sum(rolls)) # maybe don't even need xsum for human players, just for robodogs
+        options = main.get_legal_moves(curtiles, sum(rolls)) # maybe don't even need xsum for human players, just for robodogs
 
         if prints:
             print(f"rolled: {rolls}, total: {sum(rolls)}") #replace with render function
@@ -52,6 +41,42 @@ def game(player, tiles=range(1, 10), numdice=2 ,numface=6, prints=True):   #mayb
             curtiles.remove(tile)
 
 
+def coach(tiles=range(1,10), numdice=2, numface=6):
+    current_board = list(tiles)
+    optimal_play = main.optimalplay(tiles, numdice, numface)
+
+    while True:
+        rolls = diceroll(numdice, numface)
+        options = main.get_legal_moves(current_board, sum(rolls))
+        poss_boards = main.get_new_gamestates(current_board, options)
+
+        if len(options) == 0:
+            print(f"game over :( your score is {sum(current_board)}")
+
+        best_option = []
+        for move,board,score in zip(options,poss_boards,[optimal_play[board] for board in poss_boards]):
+            if len(best_option)==0 or score < best_option[-1]:
+                best_option = [move, board, score]
+
+        print(f"the board currently looks like {current_board}, and you have rolled {rolls}, totalling {sum(rolls)}")
+        print(f"this means your options are: {options}\n")
+        
+        move = [int(n) for n in input("make your choice! (seperate each tile with a space or i will break)\n").split()]
+
+        wrong_count = 0
+        while move != best_option[0]:
+            wrong_count += 1
+            if wrong_count < 2:
+                print("that isn't the optimal move! try again :)")
+            else:
+                print(f"the optimal move is {best_option[0]}... Play it!")
+            move = [int(n) for n in input("make your choice!\n").split()]
+        print("\ngood choice. next roll!\n")
+            
+        for tile in move:
+            current_board.remove(tile)
+
 if __name__ == "__main__":
-    game(strats.fewestTiles)
-    print(get_legal_moves([1,2,3,4,5,6,7,8,9], 5))
+    # game(strats.fewestTiles)
+    # print(get_legal_moves([1,2,3,4,5,6,7,8,9], 5))
+    coach()

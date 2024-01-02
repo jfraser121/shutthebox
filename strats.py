@@ -13,7 +13,6 @@ def fewestTiles(rolls, options, curtiles):
     # print(options)
     return options[-1]
 
-
 def mostTiles(rolls, options, curtiles):
     """picks the option with the most tiles. Can 
     implement easily thanks to how choices are generated"""
@@ -24,4 +23,3 @@ def fewestTilesMid(rolls, options, curtiles):
     """shortest len list but deviate towards middle numbers"""
     # print(options)
     shortest = min(len(op) for op in options)
-    
